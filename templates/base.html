@@ -6,6 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    
+    {% if user.is_authenticated %}
+        <img src="{{ user.profile_image}}">
+        <p>{{ user.get_full_name }}</p>
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">Выход</button>
+        </form>
+    {% else %}
+    <a href="{% url 'vk-auth' %}">Войти с помощью VK</a>
+    {%endif%}
 </body>
 </html>

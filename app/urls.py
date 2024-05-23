@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('memories.urls'))
+    path('', include('memories.urls')),
+    path('vk-auth/', include('vk_auth.urls'))
 ]
