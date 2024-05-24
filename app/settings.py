@@ -139,7 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # VK Auth
 VK_AUTH_CLIENT_ID = '51928562'
 VK_AUTH_SECRET_KEY = os.getenv('VK_AUTH_SECRET_KEY')
-VK_AUTH_SERVICE_KEY = os.getenv('VK_AUTH_SERVICE_KEY')
 VK_AUTH_CODE_REDIRECT_URI = 'http://localhost/vk-auth/code/'
-# VK_AUTH_COMPLETE_REDIRECT_URI = 'http://localhost/vk-auth/complete/'
 VK_AUTH_VERSION = '5.199'
