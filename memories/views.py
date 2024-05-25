@@ -5,6 +5,7 @@ from django.views.generic import CreateView, UpdateView
 from django.conf import settings
 from .models import Memory
 from .forms import MemoryForm
+from .mixins import MemoryAccessMixin
 
 
 def home(request):
@@ -18,7 +19,7 @@ def home(request):
 class MemoryCreateView(LoginRequiredMixin, CreateView):
     form_class = MemoryForm
     model = Memory
-    template_name = 'memories/memory_create.html'
+    template_name = 'memories/memory_creat_or_update.html'
 
     def get_success_url(self):
         return reverse('home')
@@ -26,3 +27,12 @@ class MemoryCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+
+class MemoryUpdateView(MemoryAccessMixin, UpdateView):
+    form_class = MemoryForm
+    model = Memory
+    template_name = 'memories/memory_creat_or_update.html'
+
+    def get_success_url(self):
+        return reverse('home')

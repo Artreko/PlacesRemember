@@ -3,7 +3,7 @@ let latitude = document.getElementById("id_latitude")
     let map = L.map('map').setView([56.010548, 92.852571], 3)
     let marker = L.marker()
     if (latitude.value && longitude.value) {
-        let latlng = L.latlng(latitude.value, longitude.value)
+        let latlng = L.latLng(latitude.value, longitude.value)
         map.setView(latlng, 15)
         marker.setLatLng(latlng).addTo(map)
     }
