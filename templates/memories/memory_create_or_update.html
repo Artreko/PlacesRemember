@@ -10,7 +10,7 @@
 {% endblock head %}
 
 {% block content %}
-<form name="memory-form" action="/memory/create" method="POST">
+<form name="memory-form" method="POST">
     {% csrf_token %}
 
     {% for field in form.visible_fields %}

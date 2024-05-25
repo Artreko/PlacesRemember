@@ -19,7 +19,7 @@ def home(request):
 class MemoryCreateView(LoginRequiredMixin, CreateView):
     form_class = MemoryForm
     model = Memory
-    template_name = 'memories/memory_creat_or_update.html'
+    template_name = 'memories/memory_create_or_update.html'
 
     def get_success_url(self):
         return reverse('home')
@@ -32,7 +32,7 @@ class MemoryCreateView(LoginRequiredMixin, CreateView):
 class MemoryUpdateView(MemoryAccessMixin, UpdateView):
     form_class = MemoryForm
     model = Memory
-    template_name = 'memories/memory_creat_or_update.html'
+    template_name = 'memories/memory_create_or_update.html'
 
     def get_success_url(self):
         return reverse('home')

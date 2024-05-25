@@ -10,7 +10,7 @@
         </form>
         <a href="{% url 'create-memory' %}">Добавить воспоминание</a>
         {% for memory in memories %}
-        <p> {{ memory.name }} </p>
+        <a href="{% url 'edit-memory' memory.slug %}"> {{ memory.name }} </p>
         {% empty %}
         <p>У вас нет ни одного воспоминания</p>
         {% endfor %}
