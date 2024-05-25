@@ -1,6 +1,11 @@
-from django.urls import path
-from .views import index
+from django.urls import path, include
+from .views import home, MemoryCreateView
+
+memory_urlpatterns = [
+    path('create', MemoryCreateView.as_view(), name='create-memory')
+]
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('memory/', include(memory_urlpatterns)),
+    path('', home, name='home'),
 ]

@@ -8,12 +8,12 @@ from .models import VkUser
 
 def logout_view(request):
     logout(request)
-    return redirect('index')
+    return redirect('home')
 
 
 def auth_view(request):
     if request.user.is_authenticated:
-        return redirect('index')
+        return redirect('home')
     params = {'client_id': settings.VK_AUTH_CLIENT_ID,
               'display': 'page',
               'redirect_uri': settings.VK_AUTH_CODE_REDIRECT_URI,
@@ -26,7 +26,7 @@ def auth_view(request):
 
 def auth_code_view(request):
     if request.user.is_authenticated:
-        return redirect('index')
+        return redirect('home')
     code = request.GET.get('code')
     params = {'client_id': settings.VK_AUTH_CLIENT_ID,
               'redirect_uri': settings.VK_AUTH_CODE_REDIRECT_URI,
@@ -68,4 +68,4 @@ def auth_code_view(request):
             user.profile_image = profile_image
         user.save()
     login(request, user)
-    return redirect('index')
+    return redirect('home')

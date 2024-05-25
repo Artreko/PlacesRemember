@@ -7,8 +7,10 @@ class Memory(models.Model):
         'vk_auth.VkUser', verbose_name='Пользователь', on_delete=models.CASCADE)
     name = models.CharField('Название', max_length=150)
     comment = models.TextField('Комментарий')
-    longitude = models.DecimalField('Долгота', max_digits=11, decimal_places=7)
-    latitude = models.DecimalField('Широта', max_digits=11, decimal_places=7)
+    latitude = models.DecimalField(
+        'Широта', max_digits=27, decimal_places=23)
+    longitude = models.DecimalField(
+        'Долгота', max_digits=27, decimal_places=23)
     slug = models.SlugField('URL', unique=True)
 
     def save(self, **kwargs) -> None:
