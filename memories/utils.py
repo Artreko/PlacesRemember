@@ -1,5 +1,5 @@
 import re
-from django.template.defaultfilters import slugify
+from pytils.translit import slugify
 
 
 def unique_slugify(instance, value, slug_field_name='slug', queryset=None,
@@ -34,15 +34,15 @@ def unique_slugify(instance, value, slug_field_name='slug', queryset=None,
 
     # Find a unique slug. If one matches, at '-2' to the end and try again
     # (then '-3', etc).
-    next = 2
+    next_pos = 2
     while not slug or queryset.filter(**{slug_field_name: slug}):
         slug = original_slug
-        end = '%s%s' % (slug_separator, next)
+        end = '%s%s' % (slug_separator, next_pos)
         if slug_len and len(slug) + len(end) > slug_len:
             slug = slug[:slug_len-len(end)]
             slug = _slug_strip(slug, slug_separator)
         slug = '%s%s' % (slug, end)
-        next += 1
+        next_pos += 1
 
     setattr(instance, slug_field.attname, slug)
 
