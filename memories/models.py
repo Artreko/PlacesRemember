@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from .utils import unique_slugify
 
 
@@ -16,3 +17,9 @@ class Memory(models.Model):
     def save(self, **kwargs) -> None:
         unique_slugify(self, self.name)
         return super().save(**kwargs)
+
+    def get_absolute_url(self):
+        return reverse("memory-edit", kwargs={"slug": self.slug})
+
+    def __str__(self):
+        return f'{self.name}({self.latitude}, {self.longitude})'

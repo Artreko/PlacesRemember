@@ -93,7 +93,7 @@ DATABASES = {
 
 # User model
 AUTH_USER_MODEL = "vk_auth.VkUser"
-LOGIN_URL = 'home'
+LOGIN_URL = 'vk-auth'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

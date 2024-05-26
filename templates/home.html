@@ -8,9 +8,9 @@
             {% csrf_token %}
             <button type="submit">Выход</button>
         </form>
-        <a href="{% url 'create-memory' %}">Добавить воспоминание</a>
+        <a href="{% url 'memory-create' %}">Добавить воспоминание</a>
         {% for memory in memories %}
-        <a href="{% url 'edit-memory' memory.slug %}"> {{ memory.name }} </p>
+        <a href="{{ memory.get_absolute_url }}"> {{ memory.name }} </p>
         {% empty %}
         <p>У вас нет ни одного воспоминания</p>
         {% endfor %}
