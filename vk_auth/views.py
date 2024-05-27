@@ -19,6 +19,9 @@ def auth_view(request):
               'redirect_uri': settings.VK_AUTH_CODE_REDIRECT_URI,
               'response_type': 'code',
               'v': settings.VK_AUTH_VERSION}
+    next_page = request.GET.get('next')
+    if next_page:
+        params['state'] = next_page
     redirect_url = f'https://oauth.vk.com/authorize?' + \
         '&'.join([f'{key}={params[key]}' for key in params])
     return redirect(redirect_url)
@@ -28,18 +31,21 @@ def auth_code_view(request):
     if request.user.is_authenticated:
         return redirect('home')
     code = request.GET.get('code')
+
     params = {'client_id': settings.VK_AUTH_CLIENT_ID,
               'redirect_uri': settings.VK_AUTH_CODE_REDIRECT_URI,
               'client_secret': settings.VK_AUTH_SECRET_KEY,
               'code': code}
     access_request = f'https://oauth.vk.com/access_token?' + \
         '&'.join([f'{key}={params[key]}' for key in params])
+
     access_response = requests.get(access_request).json()
     access_token = access_response.get('access_token')
     access_error = access_response.get('error')
     if access_error:
         HttpResponse(f'Ошибка: {access_error} \
                      Описание: {access_response.get("error_description")}')
+
     user_info = requests.post(
         'https://api.vk.com/method/account.getProfileInfo',
         data={
@@ -47,11 +53,13 @@ def auth_code_view(request):
             'v': settings.VK_AUTH_VERSION
         }
     ).json()
+
     user_info = user_info.get('response')
     user_id = user_info.get('id')
     profile_image = user_info.get('photo_200')
     first_name = user_info.get('first_name')
     last_name = user_info.get('last_name')
+
     user, created = VkUser.objects.get_or_create(
         vk_id=user_id,
         defaults={
@@ -67,5 +75,10 @@ def auth_code_view(request):
         if user.profile_image != profile_image:
             user.profile_image = profile_image
         user.save()
+
     login(request, user)
+
+    next_page = request.GET.get('state')
+    if next_page:
+        return redirect(next_page)
     return redirect('home')

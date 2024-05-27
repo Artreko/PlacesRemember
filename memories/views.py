@@ -36,3 +36,13 @@ class MemoryUpdateView(MemoryAccessMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('home')
+
+
+def handler_404(request, exception):
+    """
+    Обработка ошибки 404
+    """
+    return render(request=request, template_name='errors/error_page.html', status=404, context={
+        'title': 'Страница не найдена: 404',
+        'error_message': 'К сожалению такая страница была не найдена, или перемещена',
+    })
