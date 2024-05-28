@@ -2,19 +2,21 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-        <img src="{{ user.profile_image}}">
-        <p>{{ user.get_full_name }}</p>
-        <form action="{% url 'logout' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">Выход</button>
-        </form>
-        <a href="{% url 'memory-create' %}">Добавить воспоминание</a>
-        {% for memory in memories %}
-        <a href="{{ memory.get_absolute_url }}"> {{ memory.name }} </p>
-        {% empty %}
-        <p>У вас нет ни одного воспоминания</p>
-        {% endfor %}
-    {% else %}
-    <a href="{% url 'vk-auth' %}">Войти с помощью VK</a>
+<div class="container">
+    {% if not memories %}
+    <p class="text-center fs-5 my-5">У вас нет ни одного воспоминания</p>
+    {% endif %}
+    <div class="d-flex justify-content-center my-5">
+        <a class="btn btn-success d-inline-flex align-items-center justify-content-center" href="{% url 'memory-create' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24" fill="none">
+                <path d="M6 12H18M12 6V18" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            </svg>
+            <span>Добавить воспоминание</span>
+        </a>
+    </div>
+    {% include "memories/memories_list.html" %}
+</div>
+{% else %}
+    {% include "about.html" %}
 {%endif%}
 {% endblock content %}

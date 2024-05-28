@@ -10,23 +10,27 @@
 {% endblock head %}
 
 {% block content %}
-<form name="memory-form" method="POST">
-    {% csrf_token %}
+<div class="container">
+    <form name="memory-form" method="POST">
+        {% csrf_token %}
 
-    {% for field in form.visible_fields %}
-        {{ field.label_tag }}
-        {{ field }}
-        {% for error in field.errors %}
-                <p>{{ error }}<p>
+        {% for field in form.visible_fields %}
+        <div class="form-group mb-3">
+            <label class="form-label">{{ field.label }}</label>
+            {{ field}}
+            {% if field.errors %}
+                <small class="text-danger">{{ field.errors }}</small>
+            {% endif %}
+        </div>
         {% endfor %}
-    {% endfor %}
-    {% for hidden_field in form.hidden_fields %}
-        {{ hidden_field.errors }}
-        {{ hidden_field }}
-    {% endfor %}
-    <div id="map" style="height: 500px"></div>
-    <button type="submit">Сохранить</button>
-</form>
+        {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+        <div id="map" class="p-1 border border-secondary rounded" style="height: 35vh"></div>
+        <button class="btn btn-primary mt-3" type="submit">Сохранить</button>
+    </form>
+</div>
 <script src="{% static "map.js" %}"></script>
 {% endblock content %}
 
