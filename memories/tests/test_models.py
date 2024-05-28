@@ -30,23 +30,26 @@ class MemoryModelTest(TestCase):
                 self.assertEqual(field_label, expected_field_label)
 
     def test_save_slug(self):
-        memory = Memory.objects.get(id=1)
-        correct_slug = slugify(memory.name)
-        self.assertEqual(memory.slug, correct_slug)
+        correct_slug = slugify(self.memory1.name)
+        self.assertEqual(self.memory1.slug, correct_slug)
 
     def test_save_unique_slug(self):
-        memory = Memory.objects.get(id=2)
-        correct_slug = slugify(memory.name) + '-2'
-        self.assertEqual(memory.slug, correct_slug)
+        correct_slug = slugify(self.memory2.name) + '-2'
+        self.assertEqual(self.memory2.slug, correct_slug)
+
+    def test_update_slug(self):
+        new_name = 'Место'
+        self.memory2.name = new_name
+        self.memory2.save()
+        self.assertEqual(self.memory2.slug, slugify(new_name))
 
     def test_get_absolute_url(self):
-        memory = Memory.objects.get(id=1)
-        slug = slugify(memory.name)
+        slug = slugify(self.memory1.name)
         url = '/memory/edit/' + slug
-        self.assertEqual(memory.get_absolute_url(), url)
+        self.assertEqual(self.memory1.get_absolute_url(), url)
 
     def test_name_with_coordinates(self):
-        memory = Memory.objects.get(id=1)
         expected_name =\
-            f'{memory.name}({memory.latitude}, {memory.longitude})'
-        self.assertEqual(str(memory), expected_name)
+            f'{self.memory1.name}({self.memory1.latitude}, ' \
+            + f'{self.memory1.longitude})'
+        self.assertEqual(str(self.memory1), expected_name)

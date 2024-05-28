@@ -43,8 +43,8 @@ def auth_code_view(request):
     access_token = access_response.get('access_token')
     access_error = access_response.get('error')
     if access_error:
-        HttpResponse(f'Ошибка: {access_error} \
-                     Описание: {access_response.get("error_description")}')
+        HttpResponse(f'Ошибка: {access_error}'
+                     + f'Описание: {access_response.get("error_description")}')
 
     user_info = requests.post(
         'https://api.vk.com/method/account.getProfileInfo',
