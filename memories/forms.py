@@ -7,6 +7,8 @@ class MemoryForm(forms.ModelForm):
         model = Memory
         exclude = ['user', 'slug']
         widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'comment': forms.Textarea(attrs={'class': 'form-control'}),
             'latitude': forms.HiddenInput(),
             'longitude': forms.HiddenInput(),
         }

@@ -1,0 +1,20 @@
+<div class="row row-cols-1 row-cols-md-3 g-4 my-5">
+    {% for memory in memories %}
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title fs-4 fw-bold mb-3">
+                    <a class="text-decoration-none" href="{{ memory.get_absolute_url }}">
+                        {{ memory.name }}
+                    </a>
+                </h5>
+                <p class="card-text text-wrap fs-5 mb-0">{{ memory.comment|truncatechars:125 }}</p>
+            </div>
+            <div class="card-footer">
+                <p class="fw-light text-secondary fs-6 mb-0">{{ memory.latitude|floatformat:8 }}; {{ memory.longitude|floatformat:8 }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    

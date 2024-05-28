@@ -1,0 +1,30 @@
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start my-2">
+        <a href="{% url 'home' %}" class="d-flex align-items-center  me-md-auto text-dark text-decoration-none">
+            <span class="fs-4">PlacesRemember</span>
+        </a>
+        {% if user.is_authenticated %}
+        
+        <div class="dropdown">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" id="dropDownMenuName">
+                <span>{{ user.get_full_name }}</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="{% url 'memory-create' %}">Добавить воспоминание</a>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button class="dropdown-item" type="submit">Выход</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div class='ms-3'>
+            <img src="{{ user.profile_image }}" width="50" height="50" class="rounded-circle">
+        </div>
+        {% endif %}
+    </header>
+</div>
