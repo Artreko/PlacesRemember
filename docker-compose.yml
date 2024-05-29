@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  web:
+    # Берем Dockerfile из каталога app
+    build: .
+    # Запускаем тестовый сервер
+    command: python manage.py runserver 0.0.0.0:80
+    # куда будут помещены данные из каталога app
+    volumes:
+      - ./:/usr/src/app/
+    # Открываем порт 8000 внутри и снаружи
+    ports:
+      - 80:80
+    # Файл содержащий переменные для контейнера
+    env_file:
+      - .env
+      - .env.docker
+    # Дожидаемся запуска контейнера db
+    depends_on:
+      - db
+  db:
+      image: postgres:15
+      volumes:
+        - postgres_data:/var/lib/postgresql/data/
+      environment:
+        - POSTGRES_USER=pr_manager
+        - POSTGRES_PASSWORD=PR_MANAGER_PASS
+        - POSTGRES_DB=places_rememberer
+
+volumes:
+  postgres_data:

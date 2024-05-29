@@ -1,0 +1,11 @@
+venvpyh
+.env.example
+__pycache__
+migrations
+.vscode
+.coverage
+htmlcov
+.git
+images
+.env
+.env.docker.example
